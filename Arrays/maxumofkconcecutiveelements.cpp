@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 //!naive method time:o(n^2) space:o(1)
 int maxsum(int arr[],int n,int k){
@@ -14,9 +14,30 @@ int maxsum(int arr[],int n,int k){
     }
     return res;
 }
+//!optimised solution which uses sliding window 
+//!time:o(n) space:o(1)
+int maxconcecutivesum(int arr[],int n,int k){
+    int curr_sum=0;
+    //making the current sum to the size of the window 
+    for (int i = 0; i < k; i++)
+    {
+        curr_sum+=arr[i];
+    }
+    //assiging the max_sum to the current sum 
+    int max_sum=curr_sum;
+    for (int i = k; i < n; i++)
+    {
+        //now to obtain the maximum sum we simply subtract the first element of the window and add another element to window and check
+        //with the max_sum and return the res result
+        curr_sum+=(arr[i]-arr[i-k]);
+        max_sum=max(curr_sum,max_sum);
+    }
+    return max_sum;
+    
+}
 
 int main(){
     int arr[]={1,8,30,-5,20,7};
     int n=6;
-    cout<<maxsum(arr,n,3);
+    cout<<maxconcecutivesum(arr,n,3);
 }
